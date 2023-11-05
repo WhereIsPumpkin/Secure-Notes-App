@@ -13,6 +13,7 @@
 		75E7692B2AF6E80800F217B3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E7692A2AF6E80800F217B3 /* LoginViewController.swift */; };
 		75E7692E2AF6E87400F217B3 /* NoteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E7692D2AF6E87400F217B3 /* NoteListViewController.swift */; };
 		75E769312AF6FAEA00F217B3 /* PaddedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E769302AF6FAEA00F217B3 /* PaddedTextField.swift */; };
+		75E769352AF7BEDC00F217B3 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E769342AF7BEDC00F217B3 /* KeychainManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		75E7692A2AF6E80800F217B3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		75E7692D2AF6E87400F217B3 /* NoteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListViewController.swift; sourceTree = "<group>"; };
 		75E769302AF6FAEA00F217B3 /* PaddedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedTextField.swift; sourceTree = "<group>"; };
+		75E769342AF7BEDC00F217B3 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +58,7 @@
 		75E769142AF6AB7B00F217B3 /* Notes App */ = {
 			isa = PBXGroup;
 			children = (
-				75E7692F2AF6FAD000F217B3 /* CustomControls */,
+				75E7692F2AF6FAD000F217B3 /* Helpers */,
 				75E7692C2AF6E84000F217B3 /* App */,
 				75E769292AF6E7FD00F217B3 /* Views */,
 				75E7691E2AF6AB7D00F217B3 /* Assets.xcassets */,
@@ -83,12 +85,13 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		75E7692F2AF6FAD000F217B3 /* CustomControls */ = {
+		75E7692F2AF6FAD000F217B3 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				75E769302AF6FAEA00F217B3 /* PaddedTextField.swift */,
+				75E769342AF7BEDC00F217B3 /* KeychainManager.swift */,
 			);
-			path = CustomControls;
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,6 +164,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				75E7692E2AF6E87400F217B3 /* NoteListViewController.swift in Sources */,
+				75E769352AF7BEDC00F217B3 /* KeychainManager.swift in Sources */,
 				75E769312AF6FAEA00F217B3 /* PaddedTextField.swift in Sources */,
 				75E7692B2AF6E80800F217B3 /* LoginViewController.swift in Sources */,
 				75E769162AF6AB7B00F217B3 /* AppDelegate.swift in Sources */,
