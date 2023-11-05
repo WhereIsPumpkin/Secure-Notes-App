@@ -36,6 +36,31 @@ class CredentialsManager {
         print("Credentials successfully stored.")
     }
 
+    // Function to retrieve password
+    func retrievePassword(forUser username: String) -> String? {
+        
+        let searchQuery: [String: AnyObject] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: secureServiceIdentifier as AnyObject,
+            kSecAttrAccount as String: username as AnyObject,
+            kSecReturnData as String: kCFBooleanTrue as AnyObject,
+            kSecMatchLimit as String: kSecMatchLimitOne
+        ]
+
+        var extractedData: AnyObject?
+        let fetchStatus = SecItemCopyMatching(searchQuery as CFDictionary, &extractedData)
+
+        if fetchStatus != errSecSuccess {
+            return nil
+        }
+
+        guard let retrievedData = extractedData as? Data else {
+            return nil
+        }
+
+        return String(data: retrievedData, encoding: .utf8)
+    }
+
     func removeCredentials(forUser username: String) throws {
         
         let removalQuery: [String: AnyObject] = [
