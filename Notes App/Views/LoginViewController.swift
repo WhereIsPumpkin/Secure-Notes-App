@@ -9,7 +9,6 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
-    
     private let mainStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
@@ -55,7 +54,6 @@ class LoginViewController: UIViewController {
         label.textColor = UIColor(red: 0, green: 165/255, blue: 231/255, alpha: 1)
         label.font = .systemFont(ofSize: 26, weight: UIFont.Weight(rawValue: 700))
         
-        
         return label
     }()
     
@@ -73,7 +71,6 @@ class LoginViewController: UIViewController {
         label.text = "Account Information"
         label.font = .systemFont(ofSize: 12, weight: UIFont.Weight(rawValue: 700))
         label.textColor = UIColor(red: 80/255, green: 85/255, blue: 95/255, alpha: 1)
-        
         
         return label
     }()
@@ -96,10 +93,10 @@ class LoginViewController: UIViewController {
         password.backgroundColor = UIColor(red: 227/255, green: 229/255, blue: 232/255, alpha: 1)
         password.heightAnchor.constraint(equalToConstant: 46).isActive = true
         password.layer.cornerRadius = 4
+        password.isSecureTextEntry = true
         
         return password
     }()
-    
     
     private let loginButton: UIButton = {
         let button = UIButton()
@@ -108,10 +105,9 @@ class LoginViewController: UIViewController {
         button.heightAnchor.constraint(equalToConstant: 40).isActive = true
         button.layer.cornerRadius = 4
         button.titleLabel?.font = .systemFont(ofSize: 13, weight: UIFont.Weight(rawValue: 700))
+        
         return button
     }()
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,6 +119,7 @@ class LoginViewController: UIViewController {
         setUpSelfView()
         setUpMainStackView()
         setUpAccountStackView()
+        setupLoginButton()
     }
     
     func setUpSelfView() {
@@ -171,6 +168,48 @@ class LoginViewController: UIViewController {
         welcomeStackView.addArrangedSubview(smallWelcomeLabel)
     }
     
+    private func setupLoginButton() {
+        loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+    }
     
+    @objc private func loginButtonTapped() {
+        guard let username = usernameTextField.text, !username.isEmpty,
+              let password = passwordTextField.text, !password.isEmpty else {
+            Alert(title: "‼️გაფრთხილება‼️", message: "გთხოვთ შეიყვანოთ ინფორმაცია სრულად")
+            return
+        }
+        
+        let loginKey = "\(username)"
+        
+        var isNotFirstLogin = UserDefaults.standard.bool(forKey: loginKey)
+        
+        if isNotFirstLogin {
+            guard let retrievedPassword = CredentialsManager.shared.retrievePassword(forUser: username) else {
+                return
+            }
+            if password == retrievedPassword {
+                let VC = NoteListViewController()
+                self.navigationController?.pushViewController(VC, animated: true)
+            }
+        } else {
+            isNotFirstLogin = true
+            UserDefaults.standard.setValue(isNotFirstLogin, forKey: loginKey)
+            do {
+                try CredentialsManager.shared.storeCredentials(forUser: username, withPassword: password)
+                let nextVC = NoteListViewController()
+                navigationController?.pushViewController(nextVC, animated: true)
+                Alert(title: "გამარჯობა!", message: "როგორც ვიცი შენ ხარ: \(username)")
+            } catch {
+                print(error)
+                Alert(title: "შეიყვანეთ უნიკალური სახელი", message: "სახელი: \(username) დაკავებულია⚠️")
+            }
+        }
+    }
+    
+    private func Alert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "დახურვა", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
     
 }
